@@ -10,8 +10,51 @@
          実習2: 基本的なHTMLページ
          まずは以下のh1とpを自分の内容に書き換えてみよう
     ============================================ -->
-    <h1>はじめてのWebページ</h1>
+    <header>
+    <h1>はじめてのWebページ これから作成します</h1>
     <p>HTMLの勉強を始めました！</p>
+    </header>
+    
+    <form>
+    <!-- テキスト入力 -->
+    <input type="text" placeholder="名前を入力">
+
+    <!-- メールアドレス入力 -->
+    <input type="email" placeholder="example@mail.com">
+
+    <!-- パスワード入力（入力が●で隠れる） -->
+    <input type="password" placeholder="パスワード">
+    
+    <br>
+
+    <!-- チェックボックス -->
+    <input type="checkbox" id="task1">
+    <label for="task1">タスク1を完了</label>
+
+    <input type="checkbox" id="task2" checked>
+    <label for="task2">タスク2を完了（初期状態でチェック済み）</label>
+    
+    <br>
+
+    <!-- for属性でinputのidを指定 -->
+    <label for="username">名前:</label>
+    <input type="text" id="username">
+
+    <!-- label で input を囲む方法もある -->
+    <label>
+    メール:
+    <input type="email">
+    </label>
+
+    <br>
+
+    <!-- 通常のボタン -->
+    <button type="button">クリック</button>
+
+    <!-- 送信ボタン（form内で使用） -->
+    <button type="submit">送信</button>
+
+    </form>
 
     <!-- ============================================
          実習3: 自己紹介ページを作ろう
@@ -19,7 +62,24 @@
     ============================================ -->
 
     <!-- TODO: h1タグで自分の名前を見出しとして書いてみよう -->
-    <!-- 例: <h1>山田太郎の自己紹介</h1> -->
+    <main>
+        <section>
+            <h1>釜沢祐惺の自己紹介</h1>
+            <p>ホワイトハッカー専攻の2年生です。セキュリティーに興味があります。</p>
+        </section>
+
+        <section>
+            <h2>趣味</h2>
+            <ul>
+            <li>ゲーム</li>
+            <li>アニメ鑑賞</li>
+            <li>ダーツ</li>
+            </ul>
+            <a href="https://github.com">GitHubのプロフィール</a>
+        </section>
+
+    </main>
+    <!--<h1>山田太郎の自己紹介</h1> -->
 
     <!-- TODO: pタグで自己紹介文を2〜3文書いてみよう -->
     <!-- 例: <p>情報学部の1年生です。</p> -->
@@ -71,6 +131,21 @@
          以下のTODOに従って、フォームを作成してください
     ============================================ -->
 
+<section>
+        <h2>お問い合わせ</h2>
+        <form>
+            <div>
+                <label for="name">名前:</label>
+                <input type="text" id="name" placeholder="山田太郎">
+                <label for="email">メール:</label>
+                <input type="email" placeholder="example@mail.com">
+                <button type="submit">送信</button>
+            
+            </div>
+            ...
+        </form>
+    </section>
+
     <!-- TODO: sectionタグで「お問い合わせ」セクションを作ろう -->
     <!-- TODO: formタグの中に以下を作成:
          1. 名前の入力欄（type="text"）+ labelタグ
@@ -89,5 +164,26 @@
         </form>
     </section>
     -->
+
+<header>
+    <h1>TODO App</h1>
+</header>
+<main>
+    <form id="todo-form">
+        <input type="text" id="todo-input"
+               placeholder="新しいTODOを入力">
+        <button type="submit">追加</button>
+    </form>
+    <ul id="todo-list">
+        <li>
+            <label>
+                <input type="checkbox">
+                <span>買い物に行く</span>
+            </label>
+            <button>削除</button>
+        </li>
+    </ul>
+</main>
+
   </body>
 </html>
