@@ -31,7 +31,15 @@ function addTodo(title) {
   //   if (title === "") return;
   //   todos.push({ title: title, done: false });
   //   render();
+
+  if (title === "") return; // 空文字なら何もしない
+  todos.push({
+    title: title,
+    done: false
+  });
+  render(); // 画面を再描画
 }
+
 
 // ============================================================
 // toggleTodo: TODOの完了状態を切り替える
@@ -57,7 +65,17 @@ function deleteTodo(index) {
   // ヒント:
   //   todos.splice(index, 1);
   //   render();
+   todos.splice(index, 1);
+  render();               // 再描画
 }
+
+// render内で削除ボタンを作成
+const deleteBtn = document.createElement("button");
+deleteBtn.className = "delete-button";
+deleteBtn.textContent = "削除";
+deleteBtn.addEventListener("click", () => deleteTodo(index));
+
+li.appendChild(deleteBtn);
 
 // ============================================================
 // render: TODOリストを画面に描画する
@@ -108,6 +126,47 @@ function render() {
   //     li.appendChild(deleteBtn);
   //     todoList.appendChild(li);
   //   });
+
+  todoList.innerHTML = "";
+
+  todos.forEach((todo, index) => {
+    const li = document.createElement("li");
+    li.className = "todo-item" + (todo.done ? " done" : "");
+
+    const label = document.createElement("label");
+    label.className = "todo-label";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.className = "todo-checkbox";
+    checkbox.checked = todo.done;
+    checkbox.addEventListener("change", () => toggleTodo(index));
+
+    const span = document.createElement("span");
+    span.className = "todo-title";
+    span.textContent = todo.title;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete-button";
+    deleteBtn.textContent = "削除";
+    deleteBtn.addEventListener("click", () => deleteTodo(index));
+
+    label.appendChild(checkbox);
+    label.appendChild(span);
+    li.appendChild(label);
+    li.appendChild(deleteBtn);
+    todoList.appendChild(li);
+  });
+
+
+  todoList.innerHTML = "";
+
+  todos.forEach((todo) => {
+    const li = document.createElement("li");
+    li.className = "todo-item";
+    li.textContent = todo.title;
+    todoList.appendChild(li);
+  });
 }
 
 // ============================================================
