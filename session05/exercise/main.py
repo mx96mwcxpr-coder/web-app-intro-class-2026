@@ -31,7 +31,9 @@ def root():
 #   @app.get("/hello/{name}")
 #   def hello(name: str):
 #       return {"message": f"こんにちは、{name}さん！"}
-
+@app.get("/hello/{name}")
+def hello(name: str):
+    return {"message": f"こんにちは、{name}さん！"}
 
 # -----------------------------------------------
 # エンドポイント3: TODOリスト取得
@@ -47,6 +49,25 @@ def root():
 #   @app.get("/todos")
 #   def get_todos():
 #       return todos
+
+todos = [
+    {"id": 1, "title": "レポートを書く", "done": False},
+    {"id": 2, "title": "買い物に行く", "done": True},
+    {"id": 3, "title": "掃除する", "done": False},
+]
+
+@app.get("/todos")
+def get_todos():
+    return todos
+
+# main.py
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello, World!"}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
