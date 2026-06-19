@@ -83,6 +83,18 @@ def get_todos():
 @app.post("/todos")
 def create_todo(todo: TodoCreate):
     """タイトルを受け取り、新しいTODOを追加する"""
+    from fastapi import FastAPI, HTTPException
+
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO todos (title, done) VALUES (?, 0)",
+        (todo.title,)
+    )
+    conn.commit()
+    new_id = cursor.lastrowid
+    conn.close()
+    return {"id": new_id, "title": todo.title, "done": False}
     # ヒント:
     #   1. conn = sqlite3.connect(DATABASE) で接続し、cursor = conn.cursor()
     #   2. cursor.execute(
@@ -99,6 +111,30 @@ def create_todo(todo: TodoCreate):
 @app.put("/todos/{todo_id}")
 def update_todo(todo_id: int, todo: TodoUpdate):
     """指定IDのTODOの完了状態を更新する"""
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+
+    # まず対象のTODOが存在するか確認
+    cursor.execute("SELECT title FROM todos WHERE id = ?", (todo_id,))
+    existing = cursor.fetchone()
+    if existing is None:
+        conn.close()
+        raise HTTPException(status_code=404, detail="TODO not found")
+
+    # doneを更新
+    cursor.execute(
+        "UPDATE todos SET done = ? WHERE id = ?",
+        (int(todo.done), todo_id)
+    )
+    conn.commit()
+    conn.close()
+
+    # existing は (title,) のタプルなので先頭を取り出す
+    return {
+        "id": todo_id,
+        "title": existing[0],
+        "done": todo.done
+    }
     # ヒント:
     #   1. conn = sqlite3.connect(DATABASE) で接続し、cursor = conn.cursor()
     #   2. SELECT で対象が存在するか確認
@@ -117,6 +153,22 @@ def update_todo(todo_id: int, todo: TodoUpdate):
 @app.delete("/todos/{todo_id}")
 def delete_todo(todo_id: int):
     """指定IDのTODOを削除する"""
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+
+    # まず対象のTODOが存在するか確認
+    cursor.execute("SELECT id FROM todos WHERE id = ?", (todo_id,))
+    existing = cursor.fetchone()
+    if existing is None:
+        conn.close()
+        raise HTTPException(status_code=404, detail="TODO not found")
+
+    # 削除
+    cursor.execute("DELETE FROM todos WHERE id = ?", (todo_id,))
+    conn.commit()
+    conn.close()
+
+    return {"message": "TODO deleted", "id": todo_id}
     # ヒント:
     #   1. conn = sqlite3.connect(DATABASE) で接続し、cursor = conn.cursor()
     #   2. SELECT で対象が存在するか確認
