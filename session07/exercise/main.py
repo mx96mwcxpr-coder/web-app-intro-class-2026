@@ -137,7 +137,13 @@ def delete_todo(todo_id: int):
 #   app.mount("/", StaticFiles(directory="static", html=True), name="static")
 #
 # 注意: app.mount() はすべてのパスを受け取るので、ファイルの最後に書いてください
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
+async function getTodos() {
+  const response = await fetch("/todos");
+  const data = await response.json();
+  console.log(data);
+}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

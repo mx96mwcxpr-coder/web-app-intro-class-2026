@@ -53,6 +53,12 @@ async function toggleTodo(id, currentDone) {
     //     body: JSON.stringify({ done: !currentDone }),
     //   });
 
+await fetch(`/todos/${id}`, {
+  method: "PUT",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ done: !done })
+});
+
     await loadTodos();
   } catch (error) {
     console.error("TODO更新エラー:", error);
@@ -68,6 +74,8 @@ async function deleteTodo(id) {
     //   await fetch(`/todos/${id}`, {
     //     method: "DELETE",
     //   });
+
+await fetch(`/todos/${id}`, { method: "DELETE" });
 
     await loadTodos();
   } catch (error) {
