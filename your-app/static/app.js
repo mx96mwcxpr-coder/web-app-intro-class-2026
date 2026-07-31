@@ -17,7 +17,7 @@
  */
 
 // サーバー側のAPIのアドレス（main.py の @app.get("/todos") などに対応）
-const API_URL = "/todos";
+const API_URL = "/movies";
 
 // ============================================================
 // TODO操作（CRUD）
@@ -169,14 +169,14 @@ function renderTodos(todos) {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.className = "todo-checkbox";
-    checkbox.checked = todo.done; // いまの完了状態をチェックに反映
+    checkbox.checked = movie.watched; // いまの完了状態をチェックに反映
     // チェックが変わったら、完了状態を切り替える関数を呼ぶ
-    checkbox.addEventListener("change", () => toggleTodo(todo.id, todo.done));
+    checkbox.addEventListener("change", () => toggleTodo(movie.id, movie.watched));
 
     // TODOのタイトル文字。textContent で安全に入れる（XSS対策）
     const titleSpan = document.createElement("span");
     titleSpan.className = "todo-title";
-    titleSpan.textContent = todo.title;
+    titleSpan.textContent = movie.title;
 
     // label の中に [チェックボックス][タイトル] を入れる
     label.appendChild(checkbox);
