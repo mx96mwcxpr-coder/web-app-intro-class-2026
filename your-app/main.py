@@ -39,10 +39,10 @@ def init_db():
     #   title : TODOの内容（空はNG）
     #   done  : 完了したかどうか（0=未完了, 1=完了）
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS todos (
+        CREATE TABLE IF NOT EXISTS movies (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
-            done INTEGER DEFAULT 0
+            watched INTEGER DEFAULT 0
         )
     """)
     conn.commit()  # 変更を確定して保存する
@@ -63,7 +63,7 @@ class TodoCreate(BaseModel):
 class TodoUpdate(BaseModel):
     # TODOを更新するときに受け取るデータ
     # done は True / False（完了したかどうか）
-    done: bool
+    watched: bool
 
 
 # --- APIエンドポイント ---
